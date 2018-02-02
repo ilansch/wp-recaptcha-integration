@@ -132,9 +132,9 @@ function recaptcha_get_html ($pubkey, $error = null, $use_ssl = false)
 
 
 /**
- * A ReCaptchaResponse is returned from recaptcha_check_answer()
+ * A ReCaptchaResponse2 is returned from recaptcha_check_answer()
  */
-class ReCaptchaResponse {
+class ReCaptchaResponse2 {
         var $is_valid;
         var $error;
 }
@@ -147,7 +147,7 @@ class ReCaptchaResponse {
   * @param string $challenge
   * @param string $response
   * @param array $extra_params an array of extra variables to post to the server
-  * @return ReCaptchaResponse
+  * @return ReCaptchaResponse2
   */
 function recaptcha_check_answer ($privkey, $remoteip, $challenge, $response, $extra_params = array())
 {
@@ -163,7 +163,7 @@ function recaptcha_check_answer ($privkey, $remoteip, $challenge, $response, $ex
 	
         //discard spam submissions
         if ($challenge == null || strlen($challenge) == 0 || $response == null || strlen($response) == 0) {
-                $recaptcha_response = new ReCaptchaResponse();
+                $recaptcha_response = new ReCaptchaResponse2();
                 $recaptcha_response->is_valid = false;
                 $recaptcha_response->error = 'incorrect-captcha-sol';
                 return $recaptcha_response;
@@ -179,7 +179,7 @@ function recaptcha_check_answer ($privkey, $remoteip, $challenge, $response, $ex
                                           );
 
         $answers = explode ("\n", $response [1]);
-        $recaptcha_response = new ReCaptchaResponse();
+        $recaptcha_response = new ReCaptchaResponse2();
 
         if (trim ($answers [0]) == 'true') {
                 $recaptcha_response->is_valid = true;
